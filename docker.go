@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sahithibanda01/drone-docker/internal/docker"
 	"github.com/drone-plugins/drone-plugin-lib/drone"
+	"github.com/sahithibanda01/drone-docker/internal/docker"
 )
 
 type (
@@ -45,35 +45,35 @@ type (
 
 	// Build defines Docker build parameters.
 	Build struct {
-		Remote      string   // Git remote URL
-		Name        string   // Docker build using default named tag
-		TempTag     string   // Temporary tag used during docker build
-		Dockerfile  string   // Docker build Dockerfile
-		Context     string   // Docker build context
-		Tags        []string // Docker build tags
-		Args        []string // Docker build args
-		ArgsEnv     []string // Docker build args from env
-		ArgsNew     []string
+		Remote              string   // Git remote URL
+		Name                string   // Docker build using default named tag
+		TempTag             string   // Temporary tag used during docker build
+		Dockerfile          string   // Docker build Dockerfile
+		Context             string   // Docker build context
+		Tags                []string // Docker build tags
+		Args                []string // Docker build args
+		ArgsEnv             []string // Docker build args from env
+		ArgsNew             []string
 		IsMultipleBuildArgs bool
-		Target      string   // Docker build target
-		Squash      bool     // Docker build squash
-		Pull        bool     // Docker build pull
-		CacheFrom   []string // Docker build cache-from
-		Compress    bool     // Docker build compress
-		Repo        string   // Docker build repository
-		LabelSchema []string // label-schema Label map
-		AutoLabel   bool     // auto-label bool
-		Labels      []string // Label map
-		Link        string   // Git repo link
-		NoCache     bool     // Docker build no-cache
-		Secret      string   // secret keypair
-		SecretEnvs  []string // Docker build secrets with env var as source
-		SecretFiles []string // Docker build secrets with file as source
-		AddHost     []string // Docker build add-host
-		Quiet       bool     // Docker build quiet
-		Platform    string   // Docker build platform
-		SSHAgentKey string   // Docker build ssh agent key
-		SSHKeyPath  string   // Docker build ssh key path
+		Target              string   // Docker build target
+		Squash              bool     // Docker build squash
+		Pull                bool     // Docker build pull
+		CacheFrom           []string // Docker build cache-from
+		Compress            bool     // Docker build compress
+		Repo                string   // Docker build repository
+		LabelSchema         []string // label-schema Label map
+		AutoLabel           bool     // auto-label bool
+		Labels              []string // Label map
+		Link                string   // Git repo link
+		NoCache             bool     // Docker build no-cache
+		Secret              string   // secret keypair
+		SecretEnvs          []string // Docker build secrets with env var as source
+		SecretFiles         []string // Docker build secrets with file as source
+		AddHost             []string // Docker build add-host
+		Quiet               bool     // Docker build quiet
+		Platform            string   // Docker build platform
+		SSHAgentKey         string   // Docker build ssh agent key
+		SSHKeyPath          string   // Docker build ssh key path
 	}
 
 	// Plugin defines the Docker plugin parameters.
@@ -574,6 +574,7 @@ func hasProxyBuildArgNew(build *Build, key string) bool {
 	}
 	return false
 }
+
 // helper function to create the docker tag command.
 func commandTag(build Build, tag string) *exec.Cmd {
 	var (
