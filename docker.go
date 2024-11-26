@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/drone-plugins/drone-docker/internal/docker"
+	"github.com/sahithibanda01/drone-docker/internal/docker"
 	"github.com/drone-plugins/drone-plugin-lib/drone"
 )
 

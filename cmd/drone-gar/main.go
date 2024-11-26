@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"strings"
 
-	docker "github.com/drone-plugins/drone-docker"
-	"github.com/drone-plugins/drone-docker/internal/gcp"
+	docker "github.com/sahithibanda01/drone-docker"
+	"github.com/sahithibanda01/drone-docker/internal/gcp"
 
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
