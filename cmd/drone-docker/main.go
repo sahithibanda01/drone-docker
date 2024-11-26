@@ -151,6 +151,17 @@ func main() {
 			Usage:  "build args",
 			EnvVar: "PLUGIN_BUILD_ARGS_FROM_ENV",
 		},
+		cli.GenericFlag{
+			Name:   "args-new",
+			Usage:  "build args new",
+			EnvVar: "PLUGIN_BUILD_ARGS_NEW",
+			Value:  new(CustomStringSliceFlag),
+		},
+		cli.BoolFlag{
+			Name:   "plugin-multiple-build-agrs",
+			Usage:  "plugin multiple build agrs",
+			EnvVar: "PLUGIN_MULTIPLE_BUILD_ARGS",
+		},
 		cli.BoolFlag{
 			Name:   "quiet",
 			Usage:  "quiet docker build",
@@ -347,6 +358,8 @@ func run(c *cli.Context) error {
 			Tags:        c.StringSlice("tags"),
 			Args:        c.StringSlice("args"),
 			ArgsEnv:     c.StringSlice("args-from-env"),
+			ArgsNew:             c.Generic("args-new").(*CustomStringSliceFlag).GetValue(),
+			IsMultipleBuildArgs: c.Bool("plugin-multiple-build-agrs"),
 			Target:      c.String("target"),
 			Squash:      c.Bool("squash"),
 			Pull:        c.BoolT("pull-image"),
