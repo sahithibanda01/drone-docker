@@ -53,6 +53,8 @@ type (
 		Tags        []string // Docker build tags
 		Args        []string // Docker build args
 		ArgsEnv     []string // Docker build args from env
+		ArgsNew     []string
+		IsMultipleBuildArgs bool
 		Target      string   // Docker build target
 		Squash      bool     // Docker build squash
 		Pull        bool     // Docker build pull
@@ -413,8 +415,20 @@ func commandBuild(build Build) *exec.Cmd {
 	for _, arg := range build.ArgsEnv {
 		addProxyValue(&build, arg)
 	}
-	for _, arg := range build.Args {
-		args = append(args, "--build-arg", arg)
+	fmt.Println("helo")
+	fmt.Println(build.IsMultipleBuildArgs)
+	if build.IsMultipleBuildArgs {
+		fmt.Println("inside new")
+		for _, arg := range build.ArgsNew {
+			fmt.Println(arg)
+			fmt.Println("hehe")
+			args = append(args, "--build-arg", arg)
+		}
+	} else {
+		fmt.Println("inside old")
+		for _, arg := range build.Args {
+			args = append(args, "--build-arg", arg)
+		}
 	}
 	for _, host := range build.AddHost {
 		args = append(args, "--add-host", host)
@@ -519,6 +533,10 @@ func addProxyValue(build *Build, key string) {
 		build.Args = append(build.Args, fmt.Sprintf("%s=%s", key, value))
 		build.Args = append(build.Args, fmt.Sprintf("%s=%s", strings.ToUpper(key), value))
 	}
+	if len(value) > 0 && !hasProxyBuildArgNew(build, key) {
+		build.ArgsNew = append(build.ArgsNew, fmt.Sprintf("%s=%s", key, value))
+		build.ArgsNew = append(build.ArgsNew, fmt.Sprintf("%s=%s", strings.ToUpper(key), value))
+	}
 }
 
 // helper function to get a proxy value from the environment.
@@ -546,7 +564,16 @@ func hasProxyBuildArg(build *Build, key string) bool {
 
 	return false
 }
+func hasProxyBuildArgNew(build *Build, key string) bool {
+	keyUpper := strings.ToUpper(key)
 
+	for _, s := range build.ArgsNew {
+		if strings.HasPrefix(s, key) || strings.HasPrefix(s, keyUpper) {
+			return true
+		}
+	}
+	return false
+}
 // helper function to create the docker tag command.
 func commandTag(build Build, tag string) *exec.Cmd {
 	var (
